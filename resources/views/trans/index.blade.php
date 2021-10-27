@@ -19,8 +19,8 @@
                     <div class="card-body">
                       <div class="topright mb-3">
                         <a class="btn btn-primary" href="{{ route('trans.create') }}"> <i class="fa fa-plus"></i></a>
-                        <a class="btn btn-success " href=""><i class="far fa-file-excel"></i></a>
-                        <a class="btn btn-danger " href=""><i class="fas fa-download"></i></a>
+                        <a class="btn btn-success " href="{{ route('exports') }}"><i class="far fa-file-excel"  ></i></a>
+                        <a class="btn btn-danger " href="{{ route('exportPdf') }}"><i class="fas fa-download" id="ignorePDF"></i></a>
                       </div>
                         <table class="display expandable-table" style="width: 100%" >
                             <thead>
@@ -81,14 +81,31 @@
             </div>
           </div>
         </div>
+    
         <script>
-          @jquery
-      @toastr_js
-      @toastr_render
-      </script>
+          const export2Pdf = async () => {
+        
+            let printHideClass = document.querySelectorAll('.print-hide');
+            printHideClass.forEach(item => item.style.display = 'none');
+            await fetch('http://localhost:8000/export-pdf', {
+              method: 'GET'
+            }).then(response => {
+              if (response.ok) {
+                response.json().then(response => {
+                  var link = document.createElement('a');
+                  link.href = response;
+                  link.click();
+                  printHideClass.forEach(item => item.style.display='');
+                });
+              }
+            }).catch(error => console.log(error));
+          }
+        </script>
 @endsection
 
 
 @section('javascript')
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 @endsection

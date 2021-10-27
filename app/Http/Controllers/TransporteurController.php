@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Transporteur;
 use Illuminate\Http\Request;
-
+use Barryvdh\DomPDF\Facade as PDF;
+use App\Exports\TransporteurExport;
+use Maatwebsite\Excel\Facades\Excel;
 class TransporteurController extends Controller
 {
     /**
@@ -139,5 +141,22 @@ class TransporteurController extends Controller
         $transporteur->delete();
         toastr()->error('Data has been deleted successfully!');
                 return redirect('/trans');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new TransporteurExport, 'transporteur.xlsx');
+    }
+    public function ExportView()
+    {
+       return view('trans.index');
+    }
+    public function PDF()
+    {
+        $transporteurs = Transporteur::get();
+
+        $pdf = PDF::loadView('pdf', compact('transporteurs'))->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
+
+        return $pdf->download('transporteur.pdf');
     }
 }

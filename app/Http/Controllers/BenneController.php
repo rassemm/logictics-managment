@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Benne;
+use PDF;
 use App\Transporteur;
 use Illuminate\Http\Request;
-
+use App\Exports\BenneExport;
+use Maatwebsite\Excel\Facades\Excel;
 class BenneController extends Controller
 {
     /**
@@ -159,5 +161,21 @@ class BenneController extends Controller
         $benne->delete();
         toastr()->error('Data has been deleted successfully!');
                 return redirect('/benne');
+    }
+    public function generatePDF()
+    {
+        $bennes = Benne::get();
+
+        $pdf = PDF::loadView('myPDF', compact('bennes'))->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
+
+        return $pdf->download('benne.pdf');
+    }
+    public function export() 
+    {
+        return Excel::download(new BenneExport, 'benne.xlsx');
+    }
+    public function ExportView()
+    {
+       return view('benne.index');
     }
 }

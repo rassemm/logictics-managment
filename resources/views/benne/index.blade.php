@@ -28,10 +28,10 @@
                     <div class="card-body">
                       <div class="topright mb-3">
                         <a class="btn btn-primary" href="{{ route('benne.create') }}"> <i class="fa fa-plus"></i></a>
-                        <a class="btn btn-success " href=""><i class="far fa-file-excel"></i></a>
-                        <a class="btn btn-danger " href=""><i class="fas fa-download"></i></a>
+                        <a class="btn btn-success " href=" {{ route('export') }}"><i class="far fa-file-excel"></i></a>
+                        <a class="btn btn-danger " href="{{ route('generatePDF') }}"><i class="fas fa-download"></i></a>
                       </div>
-                        <table class="display expandable-table" style="width: 100%" >
+                        <table id="example" class="table table-striped table-bordered" style="width:100%;" >
                             <thead>
                               <tr>
                                 <th>#</th>
@@ -41,11 +41,7 @@
                                 <th>Hauteur</th>
                                 <th>Remarque</th>                               
                                 <th>Action</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                          
                               </tr>
                             </thead>
                         <tbody>
@@ -69,10 +65,6 @@
                                  
                              </form>
                               </td>
-                              <Td></Td>
-                              <Td></Td>
-                              <Td></Td>
-                              <Td></Td>
                             </tr>
                           @endforeach
                         </tbody>

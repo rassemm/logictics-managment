@@ -56,6 +56,11 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png')}}" />
   @toastr_css
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+    <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 </head>
 <body>
   <div class="container-scroller">
@@ -179,6 +184,7 @@
 @toastr_js
 @toastr_render
   <!-- End custom js for this page-->
+  @yield('javascript')
 </body>
 
 </html>
