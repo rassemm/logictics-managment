@@ -28,10 +28,12 @@
                     <div class="card-body">
                       <div class="topright mb-3">
                         <a class="btn btn-primary" href="{{ route('benne.create') }}"> <i class="fa fa-plus"></i></a>
-                        <a class="btn btn-success " href=" {{ route('export') }}"><i class="far fa-file-excel"></i></a>
-                        <a class="btn btn-danger " href="{{ route('generatePDF') }}"><i class="fas fa-download"></i></a>
+                        <a class="btn btn-danger" href="{{ route('bennes') }}"><i class="fas fa-file-export"></i></a>
+
+                        {{-- <a class="btn btn-success " href=" {{ route('export') }}"><i class="far fa-file-excel"></i></a>
+                        <a class="btn btn-danger " href="{{ route('generatePDF') }}"><i class="fas fa-download"></i></a> --}}
                       </div>
-                        <table id="example" class="table table-striped table-bordered" style="width:100%;" >
+                        <table id="example" class="table table-bordered table-striped table-hover datatable datatable-User" style="width:100%;" >
                             <thead>
                               <tr>
                                 <th>#</th>
@@ -59,6 +61,7 @@
                                 <form method="POST" action="{{route('benne.destroy',  $benne->id) }}"  >
                                
                                   <a class="btn btn-info" href="{{ route('benne.edit',  $benne->id) }}"><i class="fas fa-edit"></i></a>
+                                  <a class="btn btn-warning" href=""><i class="fas fa-eye"></i></a>
                                   @method('DELETE')
                                   @csrf
                                  <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
@@ -80,9 +83,4 @@
       @toastr_js
       @toastr_render
       </script>
-@endsection
-
-
-@section('javascript')
-
 @endsection

@@ -19,6 +19,10 @@ liste des bennes non affecteer 7el wtsp
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('Exports', 'TransporteurController@indexx')->name('indexx');
+Route::get('Bennes', 'BenneController@Bennes')->name('bennes');
+//Route::put('ChangeStatus/{transporteur}', 'TransporteurController@completedUpdate')->name('completedUpdate');
+
 Route::get('/home','HomeController@index')->name('home');
 Route::get('/affete','BenneController@affecter')->name('benne.benneAffecter');
 Route::get('/nonaffete','BenneController@nonAffecter')->name('benne.benneNonAffecter');
@@ -27,10 +31,9 @@ Route::get('/homee','HomeController@index');
 Route::get('generate-pdf','BenneController@generatePDF')->name('generatePDF');
 Route::get('ExportView', 'TransporteurController@iExportView');
 Route::get('export', 'BenneController@export')->name('export');
-
-//Route::get('pdf-file','BenneController@generatePDF')->name('generatePDF');
+Route::get('pdf-file','BenneController@generatePDF')->name('generatePDF');
 Route::get('ExportView', 'TransporteurController@iExportView');
-Route::get('export', 'TransporteurController@export')->name('exports');
+Route::get('exports', 'TransporteurController@exports')->name('exports');
 Auth::routes();
 
 Route::resource('trans','TransporteurController');

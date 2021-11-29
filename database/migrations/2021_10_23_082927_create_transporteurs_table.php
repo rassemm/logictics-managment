@@ -24,6 +24,7 @@ class CreateTransporteursTable extends Migration
             $table->string('garntie');
             $table->string('montant');
             $table->string('rq');
+            $table->smallInteger('status')->default(0);
             $table->timestamps();
         });
     }

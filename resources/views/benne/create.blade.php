@@ -43,7 +43,7 @@
             <div class="col-md-4">
             <div class="form-group">
                 <label>Longeur <abbr title="(obligatoire)" aria-hidden="true">*</abbr></label>
-                <input type="number"name="long" class="form-control  @error('long') is-invalid @enderror" value="{{ old('long') }}"  id="long">
+                <input type="number"  step="any" name="long" class="form-control  @error('long') is-invalid @enderror" value="{{ old('long') }}"  id="long">
 
                 <!-- Error -->
                 @error('long')

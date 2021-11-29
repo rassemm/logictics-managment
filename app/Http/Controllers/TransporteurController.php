@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Transporteur;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade as PDF;
-use App\Exports\TransporteurExport;
-use Maatwebsite\Excel\Facades\Excel;
+use PDF;
+//use App\Exports\TransporteurExport;
+//use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
+use App\DataTables\TransporteursDataTable;
+
 class TransporteurController extends Controller
 {
     /**
@@ -18,12 +21,26 @@ class TransporteurController extends Controller
     {
        $this->middleware('auth');
     }
-    public function index()
+
+    public function indexx(TransporteursDataTable $dataTable)
     {
-        $transporteurs = Transporteur::with('bennes')->latest()->paginate(5);
-        return view('trans.index',compact('transporteurs'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return $dataTable->render('indexx');
     }
+   public function index(   Request $request)
+   {
+         $transporteurs = Transporteur::with('bennes')->where ([
+            ['nom','!=', Null],
+            [function ($query)use ($request){
+                if (($term =$request ->term)) {
+                    $query ->orwhere('nom','LIKE','%' .$term . '%')->get();
+                }
+            }]
+        ])
+        ->orderBy("id","asc")
+        ->paginate(10);
+        return view('trans.index',compact('transporteurs'))
+        ->with('i', (request()->input('page',1)-1)*5);
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -43,9 +60,9 @@ class TransporteurController extends Controller
      */
     public function store(Request $request)
     {
-         
+
         $request->validate ([
-            'nom'            => 'required|', 
+            'nom'            => 'required|',
             'tel'        => 'required|min:8|max:10',
             'cin'         =>  'required',
             'zone'          =>  'required|',
@@ -90,6 +107,7 @@ class TransporteurController extends Controller
     public function edit( Transporteur $transporteur,$id)
     {
         $transporteur=Transporteur::find($id);
+        DB::table('transporteurs')->where('status', 0)->update(['status' => 1]);
         return view('trans.edit',compact('transporteur'));
 
     }
@@ -104,7 +122,7 @@ class TransporteurController extends Controller
     public function update(Request $request,$id)
     {
         $request->validate ([
-            'nom'            => 'required|', 
+            'nom'            => 'required|',
             'tel'        => 'required|min:8|max:10',
             'cin'         =>  'required',
             'zone'          =>  'required|',
@@ -124,7 +142,9 @@ class TransporteurController extends Controller
      $transporteur->garntie= $request->input('garntie');
      $transporteur->montant= $request->input('montant');
      $transporteur->rq   = $request->input('rq');
+     $transporteur->status = $request->input('status');
      $transporteur->save();
+    // $transporteur->save();
     toastr()->warning('transporteur modifier avec succes!');
      return redirect()->route('trans.index');
     }
@@ -143,20 +163,28 @@ class TransporteurController extends Controller
                 return redirect('/trans');
     }
 
-    public function export() 
-    {
-        return Excel::download(new TransporteurExport, 'transporteur.xlsx');
-    }
-    public function ExportView()
-    {
-       return view('trans.index');
-    }
-    public function PDF()
-    {
-        $transporteurs = Transporteur::get();
+    // public function exports()
+    // {
+    //     return Excel::download(new TransporteurExport, 'transporteur.xlsx');
+    // }
+    // public function ExportView()
+    // {
+    //    return view('trans.index');
+    // }
+    // public function PDF()
+    // {
+    //     $transporteurs = Transporteur::get();
 
-        $pdf = PDF::loadView('pdf', compact('transporteurs'))->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
+    //     $pdf = PDF::loadView('pdf', compact('transporteurs'))->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
 
-        return $pdf->download('transporteur.pdf');
-    }
+    //     return $pdf->download('transporteur.pdf');
+    // }
+//     public function completedUpdate(Request $request,Transporteur $transporteur)
+// {
+//          DB::table('transporteurs')->where('status', 0)->update(['status' => 1]);
+
+//         $transporteur->status = $request->input('status');
+//         $transporteur->save();
+//          return redirect()->back()->with('message', 'Status changed!');
+// }
 }

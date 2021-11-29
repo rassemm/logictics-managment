@@ -1,21 +1,5 @@
 @extends('Dachboard.dach')
 @section('content')
-    
-    <div class="container">
-        <div class="row">
-         
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        </div>
-    </div>
 <div class="container">
     <div class="row">
     <div class="container mt-5">
@@ -151,7 +135,7 @@
             <div class="col-md-6">
             <div class="form-group">
                 <label>Remarque <abbr title="(obligatoire)" aria-hidden="true">*</abbr></label>
-                <textarea class="form-control  @error('rq') is-invalid @enderror" value="{{ old('rq') }}"  placeholder="Entrer votre reqmarque" name="rq" id="description" id="summary-ckeditor" name="summary-ckeditor"  cols="30" rows="10"> value="{{$transporteur->rq}}"</textarea>
+                <textarea class="form-control  @error('rq') is-invalid @enderror" value="{{ old('rq') }}"  placeholder="Entrer votre reqmarque" name="rq" id="description" id="summary-ckeditor" name="summary-ckeditor"  cols="30" rows="10"> </textarea>
 
                     @error('rq')
                     <span class="invalid-feedback" role="alert">
@@ -166,15 +150,38 @@
     </div>
     <div class="row">
             <div class="col-md-6">
-             
+                <td>@if($transporteur->status == 1) 
+                    <form action="{{ route('completedUpdate', $transporteur->id) }}" method="POST">
+                      @method('PUT')
+                      @csrf                     
+                        <button  class="btn btn-success" name="status" value="0">Active</button>
+                    </form>                    
+                @else
+                    <form action="{{ route('completedUpdate', $transporteur->id) }}" method="POST">
+                      @method('PUT')
+                      @csrf                           
+                        <button  class="btn btn-dark" name="status" value="1">Inactive</button>
+                    </form>                                                 
+                @endif
+            </td>
+            </div>
+    </div>
+    <div class="row">
                 <div class="col-md-6">
                     <button type="submit" name="send" class="btn btn-dark"><i class="fas fa-plus-circle"></i></button>
                 </div>
                        </div>
+                       
+                    </div>    </div>
                     </div>
                 </div>
             </div>
         </form>
         <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="fas fa-backward"></i></a>
     </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 @endsection

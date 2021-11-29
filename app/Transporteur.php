@@ -3,10 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Transporteur extends Model
 {
-    protected $fillable = ['nom','tel','cin','zone','matricule','type','garntie','montant','rq'];
+
+    protected $fillable = ['nom','tel','cin','zone','matricule','type','garntie','montant','rq','status'];
    
 
     public function bennes(){

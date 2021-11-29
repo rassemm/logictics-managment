@@ -7,7 +7,10 @@ use PDF;
 use App\Transporteur;
 use Illuminate\Http\Request;
 use App\Exports\BenneExport;
-use Maatwebsite\Excel\Facades\Excel;
+use App\DataTables\BennesDataTable;
+
+
+
 class BenneController extends Controller
 {
     /**
@@ -20,6 +23,10 @@ class BenneController extends Controller
     public function __construct()
     {
        $this->middleware('auth');
+    }
+    public function Bennes (BennesDataTable $dataTable)
+    {
+        return $dataTable->render('Bennes');
     }
     public function index()
     {
@@ -80,9 +87,9 @@ class BenneController extends Controller
           
         $request->validate ([
             'nbenne'       => 'required|',
-            'long'        =>  'required',
-            'larg'         =>  'required|',
-            'haut'       => 'required|',
+            'long'        =>  'required|between:0,99.99' ,
+            'larg'         =>  'required|between:0,99.99' ,
+            'haut'       => 'required|between:0,99.99',
             'req'       => 'required|',
           
                      ]);
@@ -105,7 +112,7 @@ class BenneController extends Controller
      */
     public function show(Benne $benne)
     {
-        //
+        return view('benne.show',compact('benne'));
     }
 
     /**
@@ -114,7 +121,7 @@ class BenneController extends Controller
      * @param  \App\Benne  $benne
      * @return \Illuminate\Http\Response
      */
-    public function edit(Benne $benne)
+    public function edit($id)
     {
         $benne=Benne::find($id);
         return view('benne.edit',compact('benne'));
@@ -127,13 +134,13 @@ class BenneController extends Controller
      * @param  \App\Benne  $benne
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Benne $benne)
+    public function update(Request $request,$id)
     {
         $request->validate ([
             'nbenne'       => 'required|',
-            'long'        =>  'required',
-            'larg'         =>  'required|',
-            'haut'       => 'required|',
+            'long'        =>  'required|between:0,99.99' ,
+            'larg'         =>  'required|between:0,99.99' ,
+            'haut'       => 'required|between:0,99.99',
             'req'       => 'required|',
           
                      ]);
@@ -144,7 +151,7 @@ class BenneController extends Controller
      $benne->haut= $request->input('haut');
      $benne->req= $request->input('req');
      $benne->save();
-    toastr()->success('benne crée avec succes!');
+    toastr()->warning('benne modifier avec succes!');
      return redirect()->route('benne.index');
     
     }
@@ -162,20 +169,20 @@ class BenneController extends Controller
         toastr()->error('Data has been deleted successfully!');
                 return redirect('/benne');
     }
-    public function generatePDF()
-    {
-        $bennes = Benne::get();
+    // public function generatePDF()
+    // {
+    //     $bennes = Benne::get();
 
-        $pdf = PDF::loadView('myPDF', compact('bennes'))->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
+    //     $pdf = PDF::loadView('myPDF', compact('bennes'))->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
 
-        return $pdf->download('benne.pdf');
-    }
-    public function export() 
-    {
-        return Excel::download(new BenneExport, 'benne.xlsx');
-    }
-    public function ExportView()
-    {
-       return view('benne.index');
-    }
+    //     return $pdf->download('benne.pdf');
+    // }
+    // public function export() 
+    // {
+    //     return Excel::download(new BenneExport, 'benne.xlsx');
+    // }
+    // public function ExportView()
+    // {
+    //    return view('benne.index');
+    // }
 }

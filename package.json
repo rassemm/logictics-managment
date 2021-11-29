@@ -23,5 +23,10 @@
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
         "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "datatables.net-buttons": "^2.0.1",
+        "jszip": "^3.7.1",
+        "pdfmake": "^0.2.2"
     }
 }

@@ -19,10 +19,35 @@
                     <div class="card-body">
                       <div class="topright mb-3">
                         <a class="btn btn-primary" href="{{ route('trans.create') }}"> <i class="fa fa-plus"></i></a>
-                        <a class="btn btn-success " href="{{ route('exports') }}"><i class="far fa-file-excel"  ></i></a>
-                        <a class="btn btn-danger " href="{{ route('exportPdf') }}"><i class="fas fa-download" id="ignorePDF"></i></a>
+                        <a class="btn btn-danger" href="{{ route('indexx') }}"><i class="fas fa-file-export"></i></a>
+                        {{-- <a class="btn btn-success " href="{{ route('exports') }}"><i class="far fa-file-excel"  ></i></a>
+                        <a class="btn btn-danger " href="{{ route('exportPdf') }}"><i class="fas fa-download" id="ignorePDF"></i></a> --}}
+                         
+                    <div class="pull-right">
+                    
+                                  <form action="{{ route('trans.index') }}" method="GET" role="search">
+                  
+                                      <div class="input-group pull-left" >
+                                          <span class="input-group-btn mr-5 mt-1">
+                                              <button class="btn btn-info" type="submit" title="Search projects">
+                                                  <span ><i class="fa fa-search" aria-hidden="true"></i>
+                                                  </span>
+                                              </button>
+                                          </span>
+                                          <input type="text" class="form-control mr-2" name="term" placeholder="Search projects" id="term">
+                                          <a href="{{ route('trans.index') }}" class=" mt-1">
+                                              <span class="input-group-btn">
+                                                  <button class="btn btn-danger" type="button" title="Refresh page">
+                                                      <span ><i class="fa fa-cog" aria-hidden="true"></i></span>
+                                                  </button>
+                                              </span>
+                                          </a>
+                                      </div>
+                                  </form>
+                              </div>
+                      
                       </div>
-                        <table class="display expandable-table" style="width: 100%" >
+                        <table  class="table table-bordered table-striped table-hover datatable datatable-User" style="width:100%;" >
                             <thead>
                               <tr>
                                 <th>#</th>
@@ -32,11 +57,10 @@
                                 <th>Zone</th>
                                 <th>Matricule</th>
                                 <th>Type</th>     
-                                <th>Bennes</th>                            
+                                <th>Bennes</th>  
+                                <th>Status</th>                          
                                 <th>Action</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
+                                
                               
                               </tr>
                             </thead>
@@ -59,6 +83,14 @@
                                   <ul>
                               </td>
                               <td>
+                                @if($transpoteur->status == 0)
+                                <span class="btn btn-primary">Inactive</span>
+                                @elseif($transpoteur->status == 1)
+                                <span class="btn btn-success">Active
+                                </span>
+                              
+                               @endif</td>
+                              <td>
                                
                                 <form method="POST" action="{{route('trans.destroy',  $transpoteur->id) }}"  >
                                
@@ -76,36 +108,13 @@
                       </table>
                     </div>
                 </div>
+              </div>
+            </div>
                 {{ $transporteurs->links() }} 
               </div>
             </div>
           </div>
         </div>
-    
-        <script>
-          const export2Pdf = async () => {
         
-            let printHideClass = document.querySelectorAll('.print-hide');
-            printHideClass.forEach(item => item.style.display = 'none');
-            await fetch('http://localhost:8000/export-pdf', {
-              method: 'GET'
-            }).then(response => {
-              if (response.ok) {
-                response.json().then(response => {
-                  var link = document.createElement('a');
-                  link.href = response;
-                  link.click();
-                  printHideClass.forEach(item => item.style.display='');
-                });
-              }
-            }).catch(error => console.log(error));
-          }
-        </script>
 @endsection
 
-
-@section('javascript')
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-@endsection
