@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transporteur extends Model
 {
 
-    protected $fillable = ['nom','tel','cin','zone','matricule','type','garntie','montant','rq','status'];
+    protected $fillable = ['nom','tel','cin','mat','zone','matricule','type','garntie','montant','rq','status','contrat'];
    
 
     public function bennes(){

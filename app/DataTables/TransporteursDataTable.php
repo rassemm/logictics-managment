@@ -69,13 +69,13 @@ class TransporteursDataTable extends DataTable
             Column::make('tel'),
             Column::make('cin'),
             Column::make('zone'),
-            Column::make('zone'),
             Column::make('matricule'),
             Column::make('type'),
             Column::make('garntie'),
             Column::make('montant'),
             Column::make('rq'),
             Column::make('status'),
+            Column::make('contrat'),
          
        
         ];

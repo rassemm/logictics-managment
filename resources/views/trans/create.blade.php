@@ -67,7 +67,7 @@
         </div>
     </div>
     <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
             <div class="form-group">
                 <label>Zone<abbr title="(obligatoire)" aria-hidden="true">*</abbr></label>
                 <input type="text" class="form-control  @error('zone') is-invalid @enderror" value="{{ old('zone') }}" name="zone"
@@ -80,7 +80,21 @@
                 @enderror
             </div>
         </div>
-            <div class="col-md-6">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>  MAF <abbr title="(obligatoire)" aria-hidden="true">*</abbr></label>
+                <input type="text" name="mat" class="form-control  @error('mat') is-invalid @enderror" value="{{ old('mat') }}"
+                    id="mat">
+
+                    @error('mat')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+ 
+            <div class="col-md-4">
             <div class="form-group">
                 <label>Matricule <abbr title="(obligatoire)" aria-hidden="true">*</abbr></label>
                 <input type="text" class="form-control  @error('matricule') is-invalid @enderror" value="{{ old('matricule') }}" name="matricule"
@@ -156,7 +170,15 @@
     </div>
     <div class="row">
             <div class="col-md-6">
-             
+                {{-- <lable>Contrat</lable>
+                <select name="contrat">
+                  <option value="0" @if($transporteur->contrat==0)selected @endif>En attend</option>
+                  <option value="1" @if($transporteur->contrat==1)selected @endif>En cours de traitement</option>
+                  <option value="2" @if($transporteur->contrat==2)selected @endif>Rejeter</option>
+                </select> --}}
+            </div>
+    </div>
+             <div class="row">
                 <div class="col-md-6">
                     <button type="submit" name="send" class="btn btn-dark"><i class="fas fa-plus-circle"></i></button>
                 </div>

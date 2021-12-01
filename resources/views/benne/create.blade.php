@@ -12,11 +12,12 @@
     <div class="row">
     <div class="container mt-5">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-            <div class="card">
-                <div class="card-header">
-                  <i class="fa fa-align-justify"></i>{{ __('Bennes') }}
-                    </div>
+            <div class="card" style="border-radius: 7%">
+                
+                  
                 <div class="card-body">
+                    <div class="alert alert-info alert-link" role="alert"><i class="fa fa-align-justify"></i>{{ __('Bennes') }}</div>
+
         <!-- Success message -->
         @if(Session::has('success'))
         <div class="alert alert-success">
@@ -68,7 +69,7 @@
         </div>
     </div>
     <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
             <div class="form-group">
                 <label>Hauteur<abbr title="(obligatoire)" aria-hidden="true">*</abbr></label>
                 <input type="text" class="form-control  @error('haut') is-invalid @enderror" value="{{ old('haut') }}" name="haut"
@@ -82,7 +83,7 @@
             </div>
         </div>
         </div>
-    </div>
+    
     <div class="row">
             <div class="col-md-6">
             <div class="form-group">
@@ -97,21 +98,23 @@
             </div>
         </div>
         <div class="col-md-6">
-            
+
         </div>
     </div>
     <div class="row">
             <div class="col-md-6">
-             
+                <button type="submit" name="send" class="btn btn-dark"><i class="fas fa-plus-circle"></i></button>
+            </div>
                 <div class="col-md-6">
-                    <button type="submit" name="send" class="btn btn-dark"><i class="fas fa-plus-circle"></i></button>
+                    <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="fas fa-backward"></i></a>
+
                 </div>
                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </form>
-        <a href="{{ url()->previous() }}" class="btn btn-primary"><i class="fas fa-backward"></i></a>
     </div>
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 <script>

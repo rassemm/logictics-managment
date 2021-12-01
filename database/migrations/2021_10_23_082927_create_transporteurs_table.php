@@ -18,6 +18,7 @@ class CreateTransporteursTable extends Migration
             $table->string('nom');
             $table->string('tel');
             $table->string('cin');
+            $table->string('mat')->nullable();
             $table->string('zone');
             $table->string('matricule');
             $table->string('type');
@@ -25,6 +26,7 @@ class CreateTransporteursTable extends Migration
             $table->string('montant');
             $table->string('rq');
             $table->smallInteger('status')->default(0);
+            $table->string('contrat')->default('en attend');
             $table->timestamps();
         });
     }

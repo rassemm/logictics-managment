@@ -1,7 +1,7 @@
 @extends('Dachboard.dach')
 
 @section('content')
-
+@toastr_css
   
 @if (session('status'))
 <div class="alert alert-success">

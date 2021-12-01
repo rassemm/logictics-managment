@@ -19,11 +19,16 @@ liste des bennes non affecteer 7el wtsp
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/ahg', function () {
+    return view('Dachboard.solide');
+});
 Route::get('Exports', 'TransporteurController@indexx')->name('indexx');
 Route::get('Bennes', 'BenneController@Bennes')->name('bennes');
-//Route::put('ChangeStatus/{transporteur}', 'TransporteurController@completedUpdate')->name('completedUpdate');
+Route::put('ChangeStatus/{transporteur}', 'TransporteurController@Inactive')->name('Inactive');
+Route::put('Change/{transporteur}', 'TransporteurController@Active')->name('Active');
 
 Route::get('/home','HomeController@index')->name('home');
+Route::get('/shwo/{transporteur}','TransporteurController@afficher')->name('afficher');
 Route::get('/affete','BenneController@affecter')->name('benne.benneAffecter');
 Route::get('/nonaffete','BenneController@nonAffecter')->name('benne.benneNonAffecter');
 Route::post('/affete','BenneController@storeTransporteur')->name('benne.storeTransporteur');

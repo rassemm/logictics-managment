@@ -36,6 +36,7 @@ class TransporteurController extends Controller
                 }
             }]
         ])
+        
         ->orderBy("id","asc")
         ->paginate(10);
         return view('trans.index',compact('transporteurs'))
@@ -76,12 +77,14 @@ class TransporteurController extends Controller
      $transporteur->nom= $request->input('nom');
      $transporteur->tel= $request->input('tel');
      $transporteur->cin= $request->input('cin');
+     $transporteur->mat= $request->input('mat');
      $transporteur->zone= $request->input('zone');
      $transporteur->matricule= $request->input('matricule');
      $transporteur->type= $request->input('type');
      $transporteur->garntie= $request->input('garntie');
      $transporteur->montant= $request->input('montant');
      $transporteur->rq   = $request->input('rq');
+     //$transporteur->contrat   = $request->input('contrat');
      $transporteur->save();
     toastr()->success('transporteur crée avec succes!');
      return redirect()->route('trans.index');
@@ -93,8 +96,9 @@ class TransporteurController extends Controller
      * @param  \App\Transporteur  $transporteur
      * @return \Illuminate\Http\Response
      */
-    public function show(Transporteur $transporteur)
+    public function afficher (Transporteur $transporteur)
     {
+        $transporteur = Transporteur::with('bennes')->first();
         return view('trans.show',compact('transporteur'));
     }
 
@@ -107,7 +111,7 @@ class TransporteurController extends Controller
     public function edit( Transporteur $transporteur,$id)
     {
         $transporteur=Transporteur::find($id);
-        DB::table('transporteurs')->where('status', 0)->update(['status' => 1]);
+       // DB::table('transporteurs')->where('status', 0)->update(['status' => 1]);
         return view('trans.edit',compact('transporteur'));
 
     }
@@ -136,13 +140,15 @@ class TransporteurController extends Controller
      $transporteur->nom= $request->input('nom');
      $transporteur->tel= $request->input('tel');
      $transporteur->cin= $request->input('cin');
+     $transporteur->mat= $request->input('mat');
      $transporteur->zone= $request->input('zone');
      $transporteur->matricule= $request->input('matricule');
      $transporteur->type= $request->input('type');
      $transporteur->garntie= $request->input('garntie');
      $transporteur->montant= $request->input('montant');
      $transporteur->rq   = $request->input('rq');
-     $transporteur->status = $request->input('status');
+     $transporteur->contrat   = $request->input('contrat');
+    $transporteur->status = $request->input('status');
      $transporteur->save();
     // $transporteur->save();
     toastr()->warning('transporteur modifier avec succes!');
@@ -179,12 +185,18 @@ class TransporteurController extends Controller
 
     //     return $pdf->download('transporteur.pdf');
     // }
-//     public function completedUpdate(Request $request,Transporteur $transporteur)
-// {
+//      public function Inactive(Request $request,$id) {
 //          DB::table('transporteurs')->where('status', 0)->update(['status' => 1]);
-
-//         $transporteur->status = $request->input('status');
-//         $transporteur->save();
-//          return redirect()->back()->with('message', 'Status changed!');
+//          $transporteur =Transporteur::find($id);
+//          $transporteur->status = $request->input('status');
+//          $transporteur->save();
+//           return redirect()->back()->with('message', 'Status changed!');
+//  }
+//  public function Active (Request $request,$id) {
+//     DB::table('transporteurs')->where('status', 1)->update(['status' => 0]);
+//     $transporteur =Transporteur::find($id);
+//     $transporteur->status = $request->input('status');
+//     $transporteur->save();
+//      return redirect()->back()->with('message', 'Status changed!');
 // }
 }
