@@ -21,6 +21,7 @@
                               @foreach ($transporteurs as $item)
                               <option value="{{ $item->id }}">{{ $item->nom}}</option>
                               @endforeach
+                              
                           </select>
                       </div>
                       <div class="col">

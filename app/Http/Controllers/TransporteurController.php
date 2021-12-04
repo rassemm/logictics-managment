@@ -199,4 +199,11 @@ class TransporteurController extends Controller
 //     $transporteur->save();
 //      return redirect()->back()->with('message', 'Status changed!');
 // }
+
+public function deleteAll(Request $request)
+{
+    $ids = $request->ids;
+    DB::table("transporteurs")->whereIn('id',explode(",",$ids))->delete();
+    return response()->json(['success'=>"transporteurs Deleted successfully."]);
+}
 }

@@ -22,6 +22,7 @@ Route::get('/', function () {
 Route::get('/ahg', function () {
     return view('Dachboard.solide');
 });
+Route::delete('DeleteAll', 'TransporteurController@deleteAll')->name('DeleteAll');
 Route::get('Exports', 'TransporteurController@indexx')->name('indexx');
 Route::get('Bennes', 'BenneController@Bennes')->name('bennes');
 Route::put('ChangeStatus/{transporteur}', 'TransporteurController@Inactive')->name('Inactive');
